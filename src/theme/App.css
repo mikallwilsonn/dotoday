@@ -1,6 +1,24 @@
-/* -- React-todo styles -- */
+/* -- 
+  DoToday styles
+-- */
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;700&display=swap');
+
+/*
+  Typography
+*/
+.font-regular { font-weight: 400 !important; }
+.font-semi-bold { font-weight: 600 !important; }
+.font-bold { font-weight: 700 !important; }
+
+
+* {
+  box-sizing: border-box !important;
+  font-family: 'Raleway', sans-serif;
+  letter-spacing:0px;
+}
+
 .app {
-  background: #209cee;
+  background: linear-gradient(150deg, #F16529 0%, #E44D26 100%);
   padding: 30px;
   box-sizing: border-box;
   height: 100vh;
@@ -11,29 +29,90 @@
   align-items: center;
 }
 
-.todo-list {
-  background: #e8e8e8;
+.wrapper {
+  background: #FFF;
   border-radius: 4px;
-  padding: 25px;
-  max-width: 600px;
+  padding: 2rem 2.5rem;
+  width: 800px;
+  max-width: 100%;
+  height: 100%;
+  box-shadow: 0px 0px 15px rgba( 0, 0, 0, 0.25 );
 }
 
-.todo {
+header h1 {
+  text-align: center;
+  color: #707070;
+  letter-spacing: -1px;
+  font-size: 3rem;
+}
+
+.new-task-form-wrapper { padding: 1rem 0rem; }
+
+.new-task-form-wrapper form,
+.new-task-form-wrapper form input {
+  width: 100%;
+  outline: none !important;
+}
+
+.new-task-form-wrapper form input {
+  border: none !important;
+  border-bottom: 1px solid rgba( 0, 0, 0, 0.15 ) !important;
+  padding-left: 0rem;
+  padding-bottom: 1rem;
+  font-size: 1.2rem;
+  transition: 0.3s;
+}
+
+.new-task-form-wrapper form input:hover {
+  border-bottom: 1px solid rgba( 0, 0, 0, 0.5 ) !important;
+}
+
+.new-task-form-wrapper form input:focus {
+  border-bottom: 1px solid #2C2C2C !important;
+}
+
+
+.todo-list { margin-top: 2rem; }
+
+.task {
   background: #fff;
-  color: rgba( 0, 0, 0, 0.6 );
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
-  padding: 10px 25px;
-  font-size: 1rem;
-  margin-bottom: 6px;
+  color: #2C2C2C;
+  box-shadow: 1px 1px 1px rgba( 0, 0, 0, 0.15 );
+  padding: 1rem 1.5rem 1rem 0rem;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
   border-radius: 3px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  transition: 0.3s;
 }
 
-.todo div {
-  margin-left: 50px;
+.task:focus,
+.task:hover {
+  transform: scale( 1.02 );
+  background-color: rgba( 221, 221, 221, 0.1 );
+  padding: 1rem 1.5rem 1rem 1.5rem;
 }
+
+.task div { margin-left: 50px; }
+
+.task-label { margin: 0rem !important; }
+
+.task-actions {
+  opacity: 0;
+  transition: 0.3s;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100px;
+  justify-content: space-between;
+}
+
+.task.completed .task-actions { justify-content: flex-end; }
+
+.task:focus .task-actions,
+.task:hover .task-actions { opacity: 1; }
 
 button {
   padding: 5px;
@@ -50,24 +129,21 @@ button:hover {
 }
 
 button svg {
-  height: 15px;
+  height: 20px;
   width: auto;
-  fill: #FFF;
+  fill: #2C2C2C;
 }
 
-button.complete {
-  background: #77E384;
-}
-
-button.delete {
-  background: #FD686C;
-}
-
-form input {
-  padding: 10px;
-}
+form input { padding: 10px; }
 
 .completed {
   opacity: 0.5;
   text-decoration: line-through;
+}
+
+.task.completed:focus,
+.task.completed:hover {
+  transform: scale( 1 );
+  background-color: rgba( 221, 221, 221, 0 );
+  padding: 1rem 1.5rem 1rem 0rem;
 }

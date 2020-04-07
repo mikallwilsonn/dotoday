@@ -10,19 +10,22 @@ export default function NewTaskForm({ addTodo }) {
   
     const handleSubmit = event => {
       event.preventDefault();
+
       if ( !value ) return;
+
       addTodo( value );
       setValue( "" );
     };
-  
+
+
     return (
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={ handleSubmit }>
         <input
           type="text" 
-          className="input" 
-          value={value} 
-          placeholder="Type in a new todo item..."
-          onChange={event => setValue( event.target.value )} 
+          className="input font-regular" 
+          value={ value } 
+          placeholder="Type what you have to do here..."
+          onChange={( event ) => setValue( event.target.value )} 
         />
       </form>
     );
