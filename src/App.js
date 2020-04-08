@@ -54,7 +54,7 @@ export default function App() {
   );
 
 
-  // Add a new Todo item
+  // Add a new task item
   const addTask = text => {
     const tasks = db.get( 'tasks' ).value();
 
@@ -71,21 +71,26 @@ export default function App() {
   };
 
 
-  // Set a todo item as complete
-  const completeTask = index => {
-    const newTasks = [ ...tasks ];
-    newTasks[ index ].isCompleted = true;
-    setTasks( newTasks );
+  // Set a task item as complete
+  const completeTask = ( _id ) => {
+    db.get( 'tasks' )
+      .find({ _id: _id })
+      .assign({ isCompleted: true })
+      .write();
+    
+    const tasks = db.get( 'tasks' ).value();
+    setTasks( tasks );
   };
 
 
-  // Remove a todo item
+  // Remove a task item
   const removeTask = ( _id ) => {
     db.get( 'tasks' )
       .remove({ _id: _id })
       .write();
     
-    setTasks( db.get( 'tasks' ).value() );
+    const tasks = db.get( 'tasks' ).value();
+    setTasks( tasks );
   };
 
 
@@ -102,7 +107,7 @@ export default function App() {
         <Task
           key={ task._id }
           task={ task } 
-          completeTodo={ completeTask }
+          completeTask={ completeTask }
           removeTask={ removeTask }
         />
       ))
