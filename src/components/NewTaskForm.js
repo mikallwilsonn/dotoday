@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 
 // ----
 // NewTaskForm functional component
-export default function NewTaskForm({ addTodo }) {
+export default function NewTaskForm({ addTask }) {
     const [ value, setValue ] = useState( "" );
   
     const handleSubmit = event => {
@@ -13,7 +13,7 @@ export default function NewTaskForm({ addTodo }) {
 
       if ( !value ) return;
 
-      addTodo( value );
+      addTask( value );
       setValue( "" );
     };
 

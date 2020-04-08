@@ -2,6 +2,9 @@
 // Dependencies
 import React, { useState } from 'react';
 import './theme/App.css';
+import low from 'lowdb';
+import LocalStorage from 'lowdb/adapters/LocalStorage';
+import shortid from 'shortid';
 
 
 // ----
@@ -11,65 +14,102 @@ import Task from './components/Task';
 
 
 // ----
-// App
-export default function App() {
-  const [ todos, setTodos ] = useState(
-    [
+// Database
+const adapter = new LocalStorage( 'db' );
+const db = low( adapter );
+
+if ( db.get( 'tasks' ).value().length < 1 ) {
+  db.defaults({
+    tasks: [
       { 
-        text: "Build Design Prototype.",
+        _id: shortid.generate(),
+        text: "Target a specific area for improvement.",
         isCompleted: false 
       },
       { 
-        text: "Code the front-end.",
+        _id: shortid.generate(),
+        text: "Quantify or at least suggest an indicator to measure progress.",
         isCompleted: false
       },
       { 
-        text: "Build the backend server.",
+        _id: shortid.generate(),
+        text: "State what can realistically be achieved, given available resources",
         isCompleted: false
       },
       { 
-        text: "Connect some integrations.",
+        _id: shortid.generate(),
+        text: "Specify when the result(s) can be achieved",
         isCompleted: false
       }
     ]
+  }).write();
+}
+
+
+// ----
+// App
+export default function App() {
+  const [ tasks, setTasks ] = useState(
+    db.get( 'tasks' ).value()
   );
 
 
-  // Add a new Todo item
-  const addTodo = text => {
-    const newTodos = [ ...todos, { text, isCompleted: false }];
-    setTodos( newTodos );
+  // Add a new task item
+  const addTask = text => {
+    const tasks = db.get( 'tasks' ).value();
+
+    const newTask = {
+      _id: shortid.generate(),
+      text,
+      isCompleted: false
+    }
+
+    db.set( 'tasks', [ ...tasks, newTask ]).write();
+    setTasks( db.get( 'tasks' ).value() );
   };
 
-  // Set a todo item as complete
-  const completeTodo = index => {
-    const newTodos = [ ...todos ];
-    newTodos[ index ].isCompleted = true;
-    setTodos( newTodos );
+
+  // Set a task item as complete
+  const completeTask = ( _id ) => {
+    db.get( 'tasks' )
+      .find({ _id: _id })
+      .assign({ isCompleted: true })
+      .write();
+    
+    let dbTasks = db.get( 'tasks' ).value();
+    setTasks( dbTasks );
   };
 
-  // Remove a todo item
-  const removeTodo = index => {
-    const newTodos = [ ...todos ];
-    newTodos.splice( index, 1 );
-    setTodos( newTodos );
+
+  // Remove a task item
+  const removeTask = ( _id ) => {
+    db.get( 'tasks' )
+      .remove({ _id: _id })
+      .write();
+    
+    let dbTasks = db.get( 'tasks' ).value();
+    setTasks( dbTasks );
   };
+
 
   // Clear all tasks
   const clearAllTasks = () => {
-    setTodos([]);
+    db.set( 'tasks', [] ).write();
+
+    let dbTasks = db.get( 'tasks' ).value();
+    setTasks( dbTasks );
   }
+
 
   // Render Tasks
   const renderTasks = () => {
-    if ( todos.length > 0 ) {
-      return todos.map((todo, index) => (
+    if ( tasks.length > 0 ) {
+      return tasks.map(( task ) => (
         <Task
-          key={index}
-          index={index}
-          todo={todo} 
-          completeTodo={completeTodo}
-          removeTodo={removeTodo}
+          key={ task._id }
+          task={ task } 
+          completeTask={ completeTask }
+          removeTask={ removeTask }
         />
       ))
     } else {
@@ -80,6 +120,7 @@ export default function App() {
       );
     }
   }
+
 
   // ----
   // Render Component
@@ -94,7 +135,7 @@ export default function App() {
 
         <div className="app-actions-wrapper">
           {
-            todos.length > 0 ?
+            tasks.length > 0 ?
               <button
                 className="clear-tasks-btn font-semi-bold"
                 onClick={ clearAllTasks }
@@ -107,7 +148,7 @@ export default function App() {
         </div>
 
         <div className="new-task-form-wrapper">
-            <NewTaskForm addTodo={addTodo} />
+            <NewTaskForm addTask={ addTask } />
         </div>
 
         <div className="todo-list">
