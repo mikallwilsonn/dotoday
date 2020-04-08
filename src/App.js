@@ -60,6 +60,27 @@ export default function App() {
     setTodos([]);
   }
 
+  // Render Tasks
+  const renderTasks = () => {
+    if ( todos.length > 0 ) {
+      return todos.map((todo, index) => (
+        <Task
+          key={index}
+          index={index}
+          todo={todo} 
+          completeTodo={completeTodo}
+          removeTodo={removeTodo}
+        />
+      ))
+    } else {
+      return (
+        <span>
+          There are currently no tasks to display. Why not add one now?
+        </span>
+      );
+    }
+  }
+
   // ----
   // Render Component
   return (
@@ -72,12 +93,17 @@ export default function App() {
         </header>
 
         <div className="app-actions-wrapper">
-          <button
-            className="clear-tasks-btn font-semi-bold"
-            onClick={ clearAllTasks }
-          >
-            Clear Tasks
-          </button>
+          {
+            todos.length > 0 ?
+              <button
+                className="clear-tasks-btn font-semi-bold"
+                onClick={ clearAllTasks }
+              >
+                Clear Tasks
+              </button>
+            :
+              ''
+          }
         </div>
 
         <div className="new-task-form-wrapper">
@@ -85,15 +111,7 @@ export default function App() {
         </div>
 
         <div className="todo-list">
-          {todos.map((todo, index) => (
-            <Task
-              key={index}
-              index={index}
-              todo={todo} 
-              completeTodo={completeTodo}
-              removeTodo={removeTodo}
-            />
-          ))}
+          { renderTasks() }
         </div>
       </div>
     </div>
