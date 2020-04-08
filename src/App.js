@@ -55,7 +55,7 @@ export default function App() {
 
 
   // Add a new Todo item
-  const addTodo = text => {
+  const addTask = text => {
     const tasks = db.get( 'tasks' ).value();
 
     const newTask = {
@@ -80,10 +80,12 @@ export default function App() {
 
 
   // Remove a todo item
-  const removeTask = ( index ) => {
-    const newTasks = [ ...tasks ];
-    newTasks.splice( index, 1 );
-    setTasks( newTasks );
+  const removeTask = ( _id ) => {
+    db.get( 'tasks' )
+      .remove({ _id: _id })
+      .write();
+    
+    setTasks( db.get( 'tasks' ).value() );
   };
 
 
@@ -96,13 +98,12 @@ export default function App() {
   // Render Tasks
   const renderTasks = () => {
     if ( tasks.length > 0 ) {
-      return tasks.map(( task, index ) => (
+      return tasks.map(( task ) => (
         <Task
-          key={ index }
-          index={ index }
-          todo={ task } 
+          key={ task._id }
+          task={ task } 
           completeTodo={ completeTask }
-          removeTodo={ removeTask }
+          removeTask={ removeTask }
         />
       ))
     } else {
@@ -113,6 +114,7 @@ export default function App() {
       );
     }
   }
+
 
   // ----
   // Render Component
@@ -140,7 +142,7 @@ export default function App() {
         </div>
 
         <div className="new-task-form-wrapper">
-            <NewTaskForm addTodo={ addTodo } />
+            <NewTaskForm addTask={ addTask } />
         </div>
 
         <div className="todo-list">
