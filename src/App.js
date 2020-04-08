@@ -65,9 +65,7 @@ export default function App() {
     }
 
     db.set( 'tasks', [ ...tasks, newTask ]).write();
-
     setTasks( db.get( 'tasks' ).value() );
-
   };
 
 
@@ -78,8 +76,8 @@ export default function App() {
       .assign({ isCompleted: true })
       .write();
     
-    const tasks = db.get( 'tasks' ).value();
-    setTasks( tasks );
+    let dbTasks = db.get( 'tasks' ).value();
+    setTasks( dbTasks );
   };
 
 
@@ -89,8 +87,8 @@ export default function App() {
       .remove({ _id: _id })
       .write();
     
-    const tasks = db.get( 'tasks' ).value();
-    setTasks( tasks );
+    let dbTasks = db.get( 'tasks' ).value();
+    setTasks( dbTasks );
   };
 
 
@@ -98,8 +96,8 @@ export default function App() {
   const clearAllTasks = () => {
     db.set( 'tasks', [] ).write();
 
-    const tasks = db.get( 'tasks' ).value();
-    setTasks( tasks );
+    let dbTasks = db.get( 'tasks' ).value();
+    setTasks( dbTasks );
   }
 
 
