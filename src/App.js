@@ -55,6 +55,10 @@ export default function App() {
     setTodos( newTodos );
   };
 
+  // Clear all tasks
+  const clearAllTasks = () => {
+    setTodos([]);
+  }
 
   // ----
   // Render Component
@@ -66,6 +70,15 @@ export default function App() {
             Do Today
           </h1>
         </header>
+
+        <div className="app-actions-wrapper">
+          <button
+            className="clear-tasks-btn font-semi-bold"
+            onClick={ clearAllTasks }
+          >
+            Clear Tasks
+          </button>
+        </div>
 
         <div className="new-task-form-wrapper">
             <NewTaskForm addTodo={addTodo} />
