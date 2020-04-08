@@ -96,7 +96,10 @@ export default function App() {
 
   // Clear all tasks
   const clearAllTasks = () => {
-    setTasks([]);
+    db.set( 'tasks', [] ).write();
+
+    const tasks = db.get( 'tasks' ).value();
+    setTasks( tasks );
   }
 
 
