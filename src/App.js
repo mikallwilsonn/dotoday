@@ -118,25 +118,57 @@ export default class App extends Component {
 
 
   // Render Tasks
-  renderTasks = () => {
+  renderOpenTasks = () => {
     const { tasks } = this.state;
 
     if ( tasks.length > 0 ) {
-      return tasks.map(( task ) => (
-        <Task
-          key={ task._id }
-          task={ task } 
-          completeTask={ this.completeTask }
-          removeTask={ this.removeTask }
-          editTask={ this.editTask }
-        />
-      ))
-    } else {
+      return tasks.map(( task ) => {
+        if ( task.isCompleted === false ) {
+          return (
+            <Task
+              key={ task._id }
+              task={ task } 
+              completeTask={ this.completeTask }
+              removeTask={ this.removeTask }
+              editTask={ this.editTask }
+            />
+          );
+        } else {
+          return '';
+        }
+      });
+  } else {
       return (
         <span>
           There are currently no tasks to display. Why not add one now?
         </span>
       );
+    }
+  }
+
+
+  // Render Completed Tasks
+  renderCompletedTasks = () => {
+    const { tasks } = this.state;
+
+    if ( tasks.length > 0 ) {
+        return tasks.map(( task ) => {
+          if ( task.isCompleted === true ) {
+            return (
+              <Task
+                key={ task._id }
+                task={ task } 
+                completeTask={ this.completeTask }
+                removeTask={ this.removeTask }
+                editTask={ this.editTask }
+              />
+            );
+          } else {
+            return '';
+          }
+        });
+    } else {
+      return '';
     }
   }
 
@@ -187,7 +219,8 @@ export default class App extends Component {
           </div>
   
           <div className="todo-list">
-            { this.renderTasks() }
+            { this.renderOpenTasks() }
+            { this.renderCompletedTasks() }
           </div>
         </div>
       </div>
