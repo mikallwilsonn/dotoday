@@ -18,7 +18,7 @@ import Task from './components/Task';
 const adapter = new LocalStorage( 'db' );
 const db = low( adapter );
 
-if ( db.get( 'tasks' ).value().length < 1 ) {
+if ( db.get( 'tasks' ).value() === undefined ) {
   db.defaults({
     tasks: [
       { 

@@ -114,16 +114,23 @@ header h1 {
 .task:focus,
 .task:hover {
   transform: scale( 1.02 );
-  background-color: rgba( 221, 221, 221, 0.1 );
+  background-color: rgba( 221, 221, 221, 0.15 );
   padding: 1rem 1.5rem 1rem 1.5rem;
 }
 
 .task div { margin-left: 50px; }
 
-.task-label { 
-  margin: 0rem !important; 
-  width: calc( 100% - 100px );
+.task-complete-wrapper {
+  margin: 0 !important;
 }
+
+.task-label { 
+  margin: 0rem !important;
+  margin-left: 1rem !important; 
+  width: calc( 100% - 100px );
+  padding-bottom: 0.3rem;
+}
+
 
 .task-label form {
   padding: 0;
@@ -149,7 +156,7 @@ header h1 {
   flex-direction: row;
   align-items: center;
   width: 100px;
-  justify-content: space-between;
+  justify-content: flex-end;
 }
 
 .task.completed .task-actions { justify-content: flex-end; }
@@ -171,7 +178,8 @@ button:hover {
   opacity: 1;
 }
 
-button svg {
+button svg,
+.task-complete-wrapper svg {
   height: 20px;
   width: auto;
   fill: #2C2C2C;
