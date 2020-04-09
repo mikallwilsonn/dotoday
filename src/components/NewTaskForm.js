@@ -24,7 +24,7 @@ export default function NewTaskForm({ addTask }) {
           type="text" 
           className="input font-regular" 
           value={ value } 
-          placeholder="Type what you have to do here..."
+          placeholder="Type what you have to do here and press ENTER"
           onChange={( event ) => setValue( event.target.value )} 
         />
       </form>
