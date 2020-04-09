@@ -1,6 +1,6 @@
 // ----
 // Dependencies
-import React, { useState } from 'react';
+import React, { Component } from 'react';
 import './theme/App.css';
 import low from 'lowdb';
 import LocalStorage from 'lowdb/adapters/LocalStorage';
@@ -48,14 +48,18 @@ if ( db.get( 'tasks' ).value().length < 1 ) {
 
 // ----
 // App
-export default function App() {
-  const [ tasks, setTasks ] = useState(
-    db.get( 'tasks' ).value()
-  );
+export default class App extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      tasks: db.get( 'tasks' ).value()
+    }
+  }
 
 
   // Add a new task item
-  const addTask = text => {
+  addTask = ( text ) => {
     const tasks = db.get( 'tasks' ).value();
 
     const newTask = {
@@ -65,51 +69,65 @@ export default function App() {
     }
 
     db.set( 'tasks', [ ...tasks, newTask ]).write();
-    setTasks( db.get( 'tasks' ).value() );
+
+    this.setState({ 
+      tasks: db.get( 'tasks' ).value() 
+    });
   };
 
 
   // Set a task item as complete
-  const completeTask = ( _id ) => {
+  completeTask = ( _id ) => {
     db.get( 'tasks' )
       .find({ _id: _id })
       .assign({ isCompleted: true })
       .write();
     
     let dbTasks = db.get( 'tasks' ).value();
-    setTasks( dbTasks );
+
+    this.setState({ 
+      tasks: dbTasks
+    });
   };
 
 
   // Remove a task item
-  const removeTask = ( _id ) => {
+  removeTask = ( _id ) => {
     db.get( 'tasks' )
       .remove({ _id: _id })
       .write();
     
     let dbTasks = db.get( 'tasks' ).value();
-    setTasks( dbTasks );
+
+    this.setState({ 
+      tasks: dbTasks
+    });
   };
 
 
   // Clear all tasks
-  const clearAllTasks = () => {
+  clearAllTasks = () => {
     db.set( 'tasks', [] ).write();
 
     let dbTasks = db.get( 'tasks' ).value();
-    setTasks( dbTasks );
+
+    this.setState({ 
+      tasks: dbTasks
+    });
   }
 
 
   // Render Tasks
-  const renderTasks = () => {
+  renderTasks = () => {
+    const { tasks } = this.state;
+
     if ( tasks.length > 0 ) {
       return tasks.map(( task ) => (
         <Task
           key={ task._id }
           task={ task } 
-          completeTask={ completeTask }
-          removeTask={ removeTask }
+          completeTask={ this.completeTask }
+          removeTask={ this.removeTask }
         />
       ))
     } else {
@@ -124,37 +142,39 @@ export default function App() {
 
   // ----
   // Render Component
-  return (
-    <div className="app">
-      <div className="wrapper">
-        <header>
-          <h1 className="font-bold">
-            Do Today
-          </h1>
-        </header>
-
-        <div className="app-actions-wrapper">
-          {
-            tasks.length > 0 ?
-              <button
-                className="clear-tasks-btn font-semi-bold"
-                onClick={ clearAllTasks }
-              >
-                Clear Tasks
-              </button>
-            :
-              ''
-          }
-        </div>
-
-        <div className="new-task-form-wrapper">
-            <NewTaskForm addTask={ addTask } />
-        </div>
-
-        <div className="todo-list">
-          { renderTasks() }
+  render() {
+    return (
+      <div className="app">
+        <div className="wrapper">
+          <header>
+            <h1 className="font-bold">
+              Do Today
+            </h1>
+          </header>
+  
+          <div className="app-actions-wrapper">
+            {
+              this.state.tasks.length > 0 ?
+                <button
+                  className="clear-tasks-btn font-semi-bold"
+                  onClick={ this.clearAllTasks }
+                >
+                  Clear Tasks
+                </button>
+              :
+                ''
+            }
+          </div>
+  
+          <div className="new-task-form-wrapper">
+              <NewTaskForm addTask={ this.addTask } />
+          </div>
+  
+          <div className="todo-list">
+            { this.renderTasks() }
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
