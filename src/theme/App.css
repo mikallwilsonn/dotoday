@@ -120,7 +120,27 @@ header h1 {
 
 .task div { margin-left: 50px; }
 
-.task-label { margin: 0rem !important; }
+.task-label { 
+  margin: 0rem !important; 
+  width: calc( 100% - 100px );
+}
+
+.task-label form {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.task-label form input {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  outline: none !important;
+  border: none !important;
+  font-size: 1.1rem;
+}
 
 .task-actions {
   opacity: 0;

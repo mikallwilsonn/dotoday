@@ -128,6 +128,7 @@ export default class App extends Component {
           task={ task } 
           completeTask={ this.completeTask }
           removeTask={ this.removeTask }
+          editTask={ this.editTask }
         />
       ))
     } else {
@@ -137,6 +138,21 @@ export default class App extends Component {
         </span>
       );
     }
+  }
+
+
+  // Editing a task
+  editTask = ( _id, text ) => {
+    db.get( 'tasks' )
+      .find({ _id: _id })
+      .assign({ text: text })
+      .write();
+    
+    let dbTasks = db.get( 'tasks' ).value();
+
+    this.setState({ 
+      tasks: dbTasks
+    });
   }
 
 

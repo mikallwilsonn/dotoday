@@ -1,18 +1,46 @@
 // ----
 // Dependencies
-import React from 'react';
+import React, { useState } from 'react';
 
 
 // ----
 // Task functional component
-export default function Task({ task, completeTask, removeTask }) {
-    return (
-      <div className={`task  ${task.isCompleted ? "completed" : "" }`}>
-        <div className="task-label font-semi-bold">
-            { task.text }
-        </div>
-        
+export default function Task({ task, completeTask, removeTask, editTask }) {
+    const [ value, setValue ] = useState( task.text );
+
+    const [ isEditing, setIsEditing ] = useState( false );
+
+
+    const handleEdit = ( event ) => {
+        event.preventDefault();
   
+        editTask( task._id, value );
+        setIsEditing( false );
+    };
+
+
+    return (
+      <div className={`task ${task.isCompleted ? "completed" : "" }`}>
+        <div 
+            className="task-label font-semi-bold"
+            onClick={() => setIsEditing( true )}
+        >
+            {
+                isEditing === true ?
+                    <form onSubmit={ handleEdit }>
+                        <input
+                            type="text" 
+                            className="input font-semi-bold" 
+                            value={ value } 
+                            placeholder="Type what you have to do here and press ENTER"
+                            onChange={( event ) => setValue( event.target.value )} 
+                        />
+                    </form>
+                :
+                task.text
+            }
+        </div>
+
         <div className="task-actions">
             { task.isCompleted === false ?
                 <button 
