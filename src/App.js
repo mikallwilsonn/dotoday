@@ -53,7 +53,8 @@ export default class App extends Component {
     super();
 
     this.state = {
-      tasks: db.get( 'tasks' ).value()
+      tasks: db.get( 'tasks' ).value(),
+      hideCompleted: false
     }
   }
 
@@ -188,6 +189,32 @@ export default class App extends Component {
   }
 
 
+  // Render a button to toggle showing completed tasks
+  renderHideCompletedButton() {
+    const { hideCompleted } = this.state;
+
+    if ( hideCompleted === false ) {
+      return (
+        <button
+          className="clear-tasks-btn font-semi-bold"
+          onClick={() => this.setState({ hideCompleted: true }) }
+        >
+          Hide Completed
+        </button>
+      );
+    } else {
+      return (
+        <button
+          className="clear-tasks-btn font-semi-bold"
+          onClick={() => this.setState({ hideCompleted: false }) }
+        >
+          Show Completed
+        </button>
+      );
+    }
+  }
+
+
   // ----
   // Render Component
   render() {
@@ -203,12 +230,16 @@ export default class App extends Component {
           <div className="app-actions-wrapper">
             {
               this.state.tasks.length > 0 ?
-                <button
-                  className="clear-tasks-btn font-semi-bold"
-                  onClick={ this.clearAllTasks }
-                >
-                  Clear Tasks
-                </button>
+                <>
+                  <button
+                    className="clear-tasks-btn font-semi-bold"
+                    onClick={ this.clearAllTasks }
+                  >
+                    Clear Tasks
+                  </button>
+
+                  { this.renderHideCompletedButton() }
+                </>
               :
                 ''
             }
@@ -220,7 +251,12 @@ export default class App extends Component {
   
           <div className="todo-list">
             { this.renderOpenTasks() }
-            { this.renderCompletedTasks() }
+
+            { this.state.hideCompleted === false ?
+                this.renderCompletedTasks() 
+              :
+                ''
+            }
           </div>
         </div>
       </div>
