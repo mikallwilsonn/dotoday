@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 
 // ----
 // Task functional component
-export default function Task({ task, completeTask, removeTask, editTask }) {
+export default function Task({ task, completeTask, uncompleteTask, removeTask, editTask }) {
     const [ value, setValue ] = useState( task.text );
 
     const [ isEditing, setIsEditing ] = useState( false );
@@ -55,15 +55,22 @@ export default function Task({ task, completeTask, removeTask, editTask }) {
                         </svg>
                     </button>
                     :
-                    <svg 
-                        version="1.1" 
-                        xmlns="http://www.w3.org/2000/svg" 
-                        width="512" 
-                        height="512" 
-                        viewBox="0 0 512 512"
+                    <button
+                        className="uncomplete" 
+                        onClick={() => uncompleteTask( task._id )}
+                        data-tip="Undo task completion"
                     >
-                        <path d="M432 64l-240 240-112-112-80 80 192 192 320-320z"></path>
-                    </svg>
+                        <svg 
+                            version="1.1" 
+                            xmlns="http://www.w3.org/2000/svg" 
+                            width="512" 
+                            height="512" 
+                            viewBox="0 0 512 512"
+                        >
+                            <path d="M432 64l-240 240-112-112-80 80 192 192 320-320z"></path>
+                        </svg>
+                    </button>
+
                 }
             </div>
 

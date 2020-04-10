@@ -114,9 +114,10 @@ header h1 {
 .task:focus,
 .task:hover,
 .task.editing {
-  transform: scale( 1.02 );
+  transform: scale( 1.5 );
   background-color: rgba( 221, 221, 221, 0.15 );
   padding: 1rem 1.5rem 1rem 1.5rem;
+  transform: translateX( -0.5rem );
 }
 
 .task div { margin-left: 50px; }

@@ -93,6 +93,21 @@ export default class App extends Component {
   };
 
 
+  // Undo task completion and set it to be open
+  uncompleteTask = ( _id ) => {
+    db.get( 'tasks' )
+      .find({ _id: _id })
+      .assign({ isCompleted: false })
+      .write();
+    
+    let dbTasks = db.get( 'tasks' ).value();
+
+    this.setState({ 
+      tasks: dbTasks
+    });
+  }
+
+
   // Remove a task item
   removeTask = ( _id ) => {
     db.get( 'tasks' )
@@ -161,6 +176,7 @@ export default class App extends Component {
                 key={ task._id }
                 task={ task } 
                 completeTask={ this.completeTask }
+                uncompleteTask={ this.uncompleteTask }
                 removeTask={ this.removeTask }
                 editTask={ this.editTask }
               />
