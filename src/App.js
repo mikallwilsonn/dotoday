@@ -5,6 +5,7 @@ import './theme/App.css';
 import low from 'lowdb';
 import LocalStorage from 'lowdb/adapters/LocalStorage';
 import shortid from 'shortid';
+import ReactTooltip from 'react-tooltip';
 
 
 // ----
@@ -259,6 +260,8 @@ export default class App extends Component {
             }
           </div>
         </div>
+
+        <ReactTooltip />
       </div>
     );
   }
