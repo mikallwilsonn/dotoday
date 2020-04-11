@@ -14,33 +14,46 @@ import NewTaskForm from './components/NewTaskForm';
 import Task from './components/Task';
 
 
+
+
 // ----
 // Database
 const adapter = new LocalStorage( 'db' );
 const db = low( adapter );
 
 if ( db.get( 'tasks' ).value() === undefined ) {
+
+  const date = Date.now();
+
   db.defaults({
     tasks: [
       { 
         _id: shortid.generate(),
         text: "Target a specific area for improvement.",
-        isCompleted: false 
+        isCompleted: false,
+        date_created: date,
+        date_completed: null 
       },
       { 
         _id: shortid.generate(),
         text: "Quantify or at least suggest an indicator to measure progress.",
-        isCompleted: false
+        isCompleted: false,
+        date_created: date,
+        date_completed: null 
       },
       { 
         _id: shortid.generate(),
         text: "State what can realistically be achieved, given available resources",
-        isCompleted: false
+        isCompleted: false,
+        date_created: date,
+        date_completed: null 
       },
       { 
         _id: shortid.generate(),
         text: "Specify when the result(s) can be achieved",
-        isCompleted: false
+        isCompleted: false,
+        date_created: date,
+        date_completed: null 
       }
     ]
   }).write();
@@ -67,7 +80,9 @@ export default class App extends Component {
     const newTask = {
       _id: shortid.generate(),
       text,
-      isCompleted: false
+      isCompleted: false,
+      date_created: Date.now(),
+      date_completed: null
     }
 
     db.set( 'tasks', [ ...tasks, newTask ]).write();
@@ -82,7 +97,7 @@ export default class App extends Component {
   completeTask = ( _id ) => {
     db.get( 'tasks' )
       .find({ _id: _id })
-      .assign({ isCompleted: true })
+      .assign({ isCompleted: true, date_completed: Date.now() })
       .write();
     
     let dbTasks = db.get( 'tasks' ).value();
@@ -97,7 +112,7 @@ export default class App extends Component {
   uncompleteTask = ( _id ) => {
     db.get( 'tasks' )
       .find({ _id: _id })
-      .assign({ isCompleted: false })
+      .assign({ isCompleted: false, date_completed: null })
       .write();
     
     let dbTasks = db.get( 'tasks' ).value();

@@ -1,6 +1,7 @@
 // ----
 // Dependencies
 import React, { useState } from 'react';
+import moment from 'moment';
 
 
 // ----
@@ -74,7 +75,7 @@ export default function Task({ task, completeTask, uncompleteTask, removeTask, e
                 }
             </div>
 
-            <div className="task-label font-semi-bold">
+            <div className="task-label">
                 {
                     isEditing === true ?
                         <form 
@@ -90,7 +91,26 @@ export default function Task({ task, completeTask, uncompleteTask, removeTask, e
                             />
                         </form>
                     :
-                    task.text
+                        <>
+                            <span className="task-label-text font-semi-bold">
+                                { task.text }
+                            </span>
+                            
+                            <span className="task-label-date_created font-semi-regular">
+                                {
+                                    task.isCompleted === false ?
+                                        <>
+                                            Created { moment( task.date_created ).fromNow() }
+                                        </>
+                                    :
+                                        <>
+                                            Completed { moment( task.date_completed ).fromNow() } on { moment( task.date_completed ).format( "dddd, MMMM Do YYYY, h:mm:ss a" ) }
+                                        </>
+
+                                }
+                                
+                            </span>
+                        </>
                 }
             </div>
 
