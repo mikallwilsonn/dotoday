@@ -7,19 +7,24 @@ import moment from 'moment';
 // ----
 // Task functional component
 export default function Task({ task, completeTask, uncompleteTask, removeTask, editTask }) {
+    // State, hooks
     const [ value, setValue ] = useState( task.text );
-
     const [ isEditing, setIsEditing ] = useState( false );
 
 
+    // Initializing the editing of tasks
     const initEdit = () => {
         setIsEditing( true );
 
+        // Waiting for and ensuring the state has changed and 
+        // the form to render to focus on the input.
         setTimeout(() => {
             document.querySelector( `#task-form-${task._id} input` ).focus();
         }, 1000 );
     }
 
+
+    // Saving the task edit
     const handleEdit = ( event ) => {
         event.preventDefault();
   
@@ -28,6 +33,7 @@ export default function Task({ task, completeTask, uncompleteTask, removeTask, e
     };
 
 
+    // Rendering the component
     return (
         <div 
             className={`task ${task.isCompleted ? "completed" : "" } ${ isEditing ? 'editing' : ''}`}
@@ -55,7 +61,7 @@ export default function Task({ task, completeTask, uncompleteTask, removeTask, e
                             ></path>
                         </svg>
                     </button>
-                    :
+                :
                     <button
                         className="uncomplete" 
                         onClick={() => uncompleteTask( task._id )}
@@ -71,7 +77,6 @@ export default function Task({ task, completeTask, uncompleteTask, removeTask, e
                             <path d="M432 64l-240 240-112-112-80 80 192 192 320-320z"></path>
                         </svg>
                     </button>
-
                 }
             </div>
 
@@ -106,9 +111,7 @@ export default function Task({ task, completeTask, uncompleteTask, removeTask, e
                                         <>
                                             Completed { moment( task.date_completed ).fromNow() } on { moment( task.date_completed ).format( "dddd, MMMM Do YYYY, h:mm:ss a" ) }
                                         </>
-
                                 }
-                                
                             </span>
                         </>
                 }
@@ -117,25 +120,23 @@ export default function Task({ task, completeTask, uncompleteTask, removeTask, e
             <div className="task-actions">
                 { task.isCompleted === false ?
                     isEditing === false ?
-
-                            <button 
-                                className="edit" 
-                                onClick={() => initEdit( task._id )}
-                                data-tip="Edit task?"
+                        <button 
+                            className="edit" 
+                            onClick={() => initEdit( task._id )}
+                            data-tip="Edit task?"
+                        >
+                            <svg 
+                                version="1.1" 
+                                xmlns="http://www.w3.org/2000/svg" 
+                                width="379" 
+                                height="448" 
+                                viewBox="0 0 379 448"
                             >
-                                <svg 
-                                    version="1.1" 
-                                    xmlns="http://www.w3.org/2000/svg" 
-                                    width="379" 
-                                    height="448" 
-                                    viewBox="0 0 379 448"
-                                >
-                                    <path 
-                                        d="M90.75 384l22.75-22.75-58.75-58.75-22.75 22.75v26.75h32v32h26.75zM221.5 152c0-3.25-2.25-5.5-5.5-5.5-1.5 0-3 0.5-4.25 1.75l-135.5 135.5c-1.25 1.25-1.75 2.75-1.75 4.25 0 3.25 2.25 5.5 5.5 5.5 1.5 0 3-0.5 4.25-1.75l135.5-135.5c1.25-1.25 1.75-2.75 1.75-4.25zM208 104l104 104-208 208h-104v-104zM378.75 128c0 8.5-3.5 16.75-9.25 22.5l-41.5 41.5-104-104 41.5-41.25c5.75-6 14-9.5 22.5-9.5s16.75 3.5 22.75 9.5l58.75 58.5c5.75 6 9.25 14.25 9.25 22.75z"
-                                    ></path>
-                                </svg>
-                            </button>
-
+                                <path 
+                                    d="M90.75 384l22.75-22.75-58.75-58.75-22.75 22.75v26.75h32v32h26.75zM221.5 152c0-3.25-2.25-5.5-5.5-5.5-1.5 0-3 0.5-4.25 1.75l-135.5 135.5c-1.25 1.25-1.75 2.75-1.75 4.25 0 3.25 2.25 5.5 5.5 5.5 1.5 0 3-0.5 4.25-1.75l135.5-135.5c1.25-1.25 1.75-2.75 1.75-4.25zM208 104l104 104-208 208h-104v-104zM378.75 128c0 8.5-3.5 16.75-9.25 22.5l-41.5 41.5-104-104 41.5-41.25c5.75-6 14-9.5 22.5-9.5s16.75 3.5 22.75 9.5l58.75 58.5c5.75 6 9.25 14.25 9.25 22.75z"
+                                ></path>
+                            </svg>
+                        </button>
                     :
                         <button 
                             className="cancel-edit" 
