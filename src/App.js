@@ -14,15 +14,15 @@ import NewTaskForm from './components/NewTaskForm';
 import Task from './components/Task';
 
 
-
-
 // ----
-// Database
+// Database 
 const adapter = new LocalStorage( 'db' );
 const db = low( adapter );
 
-if ( db.get( 'tasks' ).value() === undefined ) {
 
+// If no database is found, set some initial data for the 
+// user to see and interact with
+if ( db.get( 'tasks' ).value() === undefined ) {
   const date = Date.now();
 
   db.defaults({
@@ -61,11 +61,12 @@ if ( db.get( 'tasks' ).value() === undefined ) {
 
 
 // ----
-// App
+// App class component
 export default class App extends Component {
   constructor() {
     super();
 
+    // Initial state
     this.state = {
       tasks: db.get( 'tasks' ).value(),
       hideCompleted: false

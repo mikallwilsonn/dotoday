@@ -8,6 +8,7 @@ import React, { useState } from 'react';
 export default function NewTaskForm({ addTask }) {
     const [ value, setValue ] = useState( "" );
   
+    // Handling the functionality of submitting the form for a new task
     const handleSubmit = event => {
       event.preventDefault();
 
@@ -17,7 +18,7 @@ export default function NewTaskForm({ addTask }) {
       setValue( "" );
     };
 
-
+    // Rendering the component
     return (
       <form onSubmit={ handleSubmit }>
         <input
