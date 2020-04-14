@@ -105,7 +105,7 @@ export default function Task({ task, completeTask, uncompleteTask, removeTask, e
                                 {
                                     task.isCompleted === false ?
                                         <>
-                                            Created { moment( task.date_created ).fromNow() }
+                                            { moment( task.date_created ).fromNow() }
                                         </>
                                     :
                                         <>
