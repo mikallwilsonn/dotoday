@@ -21,7 +21,10 @@ export default function NewTaskForm({ addTask }) {
     // Rendering the component
     return (
       <form onSubmit={ handleSubmit }>
-        <button type="submit">
+        <button 
+          data-tip="Add New Task"
+          type="submit"
+        >
           <svg 
             xmlns="http://www.w3.org/2000/svg" 
             viewBox="0 0 448 512"
