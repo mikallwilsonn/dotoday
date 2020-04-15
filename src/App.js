@@ -336,6 +336,12 @@ export default class App extends Component {
                 ''
             }
           </div>
+
+          <footer>
+            <span className="font-regular">
+              Created by <a className="font-bold" href="https://github.com/mikallwilsonn" target="_blank" rel="noopener noreferrer">Michael R. Wilson</a>
+            </span>
+          </footer>
         </div>
 
         <ReactTooltip />
