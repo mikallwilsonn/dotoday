@@ -129,7 +129,6 @@ header h1 {
 
 .todo-list { 
   margin-top: 2rem;
-  padding-right: 0.5rem; 
 }
 
 .task {
@@ -259,3 +258,40 @@ footer {
 footer span a {
   color: var( --dark );
 }
+
+
+/*
+  ---- Responsive Media Queries
+*/
+
+/*
+@media (max-width: 575.98px) {}
+*/
+@media (max-width: 767.98px) {
+  .wrapper {
+    padding: 0.25rem 1rem;
+  } 
+
+  header {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .new-task-form-wrapper form {
+    padding: 0.75rem 0.5rem;
+  }
+
+  .task {
+    padding: 0.5rem;
+  }
+
+  .task-actions {
+    opacity: 0.25;
+    margin-left: 0.5rem !important;
+  }
+}
+
+/*
+@media (max-width: 991.98px) {}
+@media (max-width: 1199.98px) {}
+*/
