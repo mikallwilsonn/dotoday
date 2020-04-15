@@ -38,6 +38,7 @@ export default function NewTaskForm({ addTask }) {
       <form 
         id="NewTaskForm"
         onSubmit={ handleSubmit }
+        data-testid="new-task-form"
       >
         <button 
           id="AddNewTaskButton"

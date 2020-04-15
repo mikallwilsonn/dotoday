@@ -37,6 +37,7 @@ export default function Task({ task, completeTask, uncompleteTask, removeTask, e
     return (
         <div 
             className={`task ${task.isCompleted ? "completed" : "" } ${ isEditing ? 'editing' : ''}`}
+            data-testid={`task-${task._id}`}
         >
             <div className="task-complete-wrapper">
                 { task.isCompleted === false ?

@@ -292,7 +292,10 @@ export default class App extends Component {
   // Render Component
   render() {
     return (
-      <div className="app">
+      <div 
+        data-testid="application"
+        className="app"
+      >
         <div className="wrapper">
           <header>
             <h1 className="font-bold">

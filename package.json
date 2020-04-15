@@ -9,13 +9,32 @@
     "react-dom": "^16.13.1",
     "react-scripts": "2.1.8",
     "react-tooltip": "^4.2.1",
-    "shortid": "^2.2.15"
+    "shortid": "^2.2.15",
+    "@testing-library/react": "^8.0.5"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.js",
+      "!src/index.js"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 90,
+        "functions": 90,
+        "lines": 90,
+        "statements": 90
+      }
+    },
+    "coverageReporters": [
+      "html",
+      "text"
+    ]
   },
   "eslintConfig": {
     "extends": "react-app"
