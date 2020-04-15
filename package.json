@@ -20,7 +20,7 @@
   },
   "jest": {
     "collectCoverageFrom": [
-      "src/**/*.js",
+      "src/**/*.spec.js",
       "!src/index.js"
     ],
     "coverageThreshold": {

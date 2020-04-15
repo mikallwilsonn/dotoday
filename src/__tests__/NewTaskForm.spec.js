@@ -17,6 +17,6 @@ describe( '<NewTaskForm />', () => {
     it( 'renders the component', () => {
         const { queryByTestId } = render( <NewTaskForm /> );
 
-        expect( queryByTestId( `new-task-form` )).toBeTruthy();
+        expect( queryByTestId( 'new-task-form' )).toBeTruthy();
     });
 });
