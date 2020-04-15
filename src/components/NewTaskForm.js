@@ -47,6 +47,7 @@ export default function NewTaskForm({ addTask }) {
           disabled={ true }
           tabIndex={ 0 }
           aria-label="Add new task"
+          data-testid="new-task-form-submit-button"
         >
           <svg 
             xmlns="http://www.w3.org/2000/svg" 
@@ -68,6 +69,7 @@ export default function NewTaskForm({ addTask }) {
           tabIndex={ 0 }
           aria-label="New task text"
           required
+          data-testid="new-task-form-input"
         />
       </form>
     );

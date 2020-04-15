@@ -38,6 +38,6 @@ describe( '<Task />', () => {
             /> 
         );
 
-        expect( queryByTestId( `task` )).toBeTruthy();
+        expect( queryByTestId( 'task' )).toBeTruthy();
     });
 });

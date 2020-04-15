@@ -92,7 +92,7 @@ describe( '<App />', () => {
     }, 500 );
   });
 
-  
+
   // --
   it( 'can show completed tasks after hiding them with the Show Completed Button', () => {
     const { queryByTestId, queryAllByTestId } = render( <App /> );
