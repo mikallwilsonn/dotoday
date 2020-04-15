@@ -44,6 +44,8 @@ export default function Task({ task, completeTask, uncompleteTask, removeTask, e
                         className="complete" 
                         onClick={() => completeTask( task._id )}
                         data-tip="Mark as complete"
+                        tabIndex={ 0 }
+                        aria-label="Mark task as complete"
                     >
                         <svg 
                             aria-hidden="true" 
@@ -66,6 +68,8 @@ export default function Task({ task, completeTask, uncompleteTask, removeTask, e
                         className="uncomplete" 
                         onClick={() => uncompleteTask( task._id )}
                         data-tip="Undo task completion"
+                        tabIndex={ 0 }
+                        aria-label="Mark task as uncomplete"
                     >
                         <svg 
                             version="1.1" 
@@ -93,6 +97,9 @@ export default function Task({ task, completeTask, uncompleteTask, removeTask, e
                                 value={ value } 
                                 placeholder="Type what you have to do here and press ENTER"
                                 onChange={( event ) => setValue( event.target.value )} 
+                                aria-required={ true }
+                                tabIndex={ 0 }
+                                aria-label="Task text to edit"
                             />
                         </form>
                     :
@@ -124,6 +131,8 @@ export default function Task({ task, completeTask, uncompleteTask, removeTask, e
                             className="edit" 
                             onClick={() => initEdit( task._id )}
                             data-tip="Edit task?"
+                            tabIndex={ 0 }
+                            aria-label="Edit task button"
                         >
                             <svg 
                                 version="1.1" 
@@ -142,6 +151,8 @@ export default function Task({ task, completeTask, uncompleteTask, removeTask, e
                             className="cancel-edit" 
                             onClick={() => setIsEditing( false )}
                             data-tip="Cancel edit?"
+                            tabIndex={ 0 }
+                            aria-label="Cancel the task edit changes"
                         >
                             <svg 
                                 aria-hidden="true" 
@@ -167,6 +178,8 @@ export default function Task({ task, completeTask, uncompleteTask, removeTask, e
                     className="delete" 
                     onClick={() => removeTask( task._id )} 
                     data-tip="Delete task?"
+                    tabIndex={ 0 }
+                    aria-label="Delete task button"
                 >
                     <svg 
                         aria-hidden="true" 
