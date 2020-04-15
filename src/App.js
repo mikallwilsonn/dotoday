@@ -19,43 +19,61 @@ import Task from './components/Task';
 const adapter = new LocalStorage( 'db' );
 const db = low( adapter );
 
+const date = Date.now();
+
+const defaultTasks = [
+  { 
+    _id: shortid.generate(),
+    text: "Target a specific area for improvement.",
+    isCompleted: false,
+    date_created: date,
+    date_completed: null 
+  },
+  { 
+    _id: shortid.generate(),
+    text: "Quantify or at least suggest an indicator to measure progress.",
+    isCompleted: false,
+    date_created: date,
+    date_completed: null 
+  },
+  { 
+    _id: shortid.generate(),
+    text: "State what can realistically be achieved, given available resources",
+    isCompleted: false,
+    date_created: date,
+    date_completed: null 
+  },
+  { 
+    _id: shortid.generate(),
+    text: "Specify when the result(s) can be achieved",
+    isCompleted: false,
+    date_created: date,
+    date_completed: null 
+  },
+  { 
+    _id: shortid.generate(),
+    text: "A default completed task",
+    isCompleted: true,
+    date_created: date,
+    date_completed: date 
+  },
+  { 
+    _id: shortid.generate(),
+    text: "Yet another default completed task",
+    isCompleted: true,
+    date_created: date,
+    date_completed: date 
+  }
+]
+
 
 // If no database is found, set some initial data for the 
 // user to see and interact with
 if ( db.get( 'tasks' ).value() === undefined ) {
-  const date = Date.now();
+  
 
   db.defaults({
-    tasks: [
-      { 
-        _id: shortid.generate(),
-        text: "Target a specific area for improvement.",
-        isCompleted: false,
-        date_created: date,
-        date_completed: null 
-      },
-      { 
-        _id: shortid.generate(),
-        text: "Quantify or at least suggest an indicator to measure progress.",
-        isCompleted: false,
-        date_created: date,
-        date_completed: null 
-      },
-      { 
-        _id: shortid.generate(),
-        text: "State what can realistically be achieved, given available resources",
-        isCompleted: false,
-        date_created: date,
-        date_completed: null 
-      },
-      { 
-        _id: shortid.generate(),
-        text: "Specify when the result(s) can be achieved",
-        isCompleted: false,
-        date_created: date,
-        date_completed: null 
-      }
-    ]
+    tasks: defaultTasks
   }).write();
 }
 
@@ -63,13 +81,37 @@ if ( db.get( 'tasks' ).value() === undefined ) {
 // ----
 // App class component
 export default class App extends Component {
-  constructor() {
-    super();
+  constructor( props ) {
+    super( props );
 
     // Initial state
     this.state = {
       tasks: db.get( 'tasks' ).value(),
       hideCompleted: false
+    }
+  }
+
+
+  // Test tasks
+  setTasksforTests() {
+    defaultTasks.forEach( task => {
+      db.get( 'tasks' )
+        .push( task )
+        .write();
+    })
+
+    let dbTasks = db.get( 'tasks' ).value();
+
+    this.setState({ 
+      tasks: dbTasks
+    });
+  }
+
+
+  // --
+  componentDidMount() {
+    if ( this.props.testTasks && this.props.testTasks === true ) {
+      this.setTasksforTests()
     }
   }
 
@@ -233,6 +275,7 @@ export default class App extends Component {
           onClick={() => this.setState({ hideCompleted: true }) }
           tabIndex={ 0 }
           aria-label="Hide Tasks that have been Completed"
+          data-testid="hide-completed-button"
         >
           <svg 
             aria-hidden="true" 
@@ -262,6 +305,7 @@ export default class App extends Component {
           onClick={() => this.setState({ hideCompleted: false }) }
           tabIndex={ 0 }
           aria-label="Show Tasks that have been Completed"
+          data-testid="show-completed-button"
         >
           <svg 
             aria-hidden="true" 
@@ -292,7 +336,10 @@ export default class App extends Component {
   // Render Component
   render() {
     return (
-      <div className="app">
+      <div 
+        data-testid="application"
+        className="app"
+      >
         <div className="wrapper">
           <header>
             <h1 className="font-bold">
@@ -308,6 +355,7 @@ export default class App extends Component {
                       onClick={ this.clearAllTasks }
                       tabIndex={ 0 }
                       aria-label="Clear and delete all tasks"
+                      data-testid="clear-tasks-button"
                     >
                       <svg 
                         xmlns="http://www.w3.org/2000/svg" 
