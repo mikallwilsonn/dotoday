@@ -248,3 +248,14 @@ button svg,
 }
 
 form input { padding: 10px; }
+
+
+footer {
+  display: block;
+  text-align: center;
+  padding: 5rem 2rem;
+}
+
+footer span a {
+  color: var( --dark );
+}
