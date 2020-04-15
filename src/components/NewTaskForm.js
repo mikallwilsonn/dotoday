@@ -16,14 +16,34 @@ export default function NewTaskForm({ addTask }) {
 
       addTask( value );
       setValue( "" );
+
+      document.querySelector( '#NewTaskForm' ).classList.remove( 'creating' );
+      document.querySelector( '#AddNewTaskButton' ).disabled = true;
     };
+
+
+    // Handle changing the value of the task input
+    const handleChange = ( value ) => {
+      setValue( value );
+
+      if ( value.length > 0 ) {
+        document.querySelector( '#AddNewTaskButton' ).disabled = false;
+      } else {
+        document.querySelector( '#AddNewTaskButton' ).disabled = true;
+      }
+    }
 
     // Rendering the component
     return (
-      <form onSubmit={ handleSubmit }>
+      <form 
+        id="NewTaskForm"
+        onSubmit={ handleSubmit }
+      >
         <button 
+          id="AddNewTaskButton"
           data-tip="Add New Task"
           type="submit"
+          disabled={ true }
         >
           <svg 
             xmlns="http://www.w3.org/2000/svg" 
@@ -38,7 +58,9 @@ export default function NewTaskForm({ addTask }) {
           className="input font-regular" 
           value={ value } 
           placeholder="What do you have to do today?"
-          onChange={( event ) => setValue( event.target.value )} 
+          onChange={( event ) => handleChange( event.target.value )} 
+          onClick={() => document.querySelector( '#NewTaskForm' ).classList.add( 'creating' )}
+          onBlur={() => document.querySelector( '#NewTaskForm' ).classList.remove( 'creating' )}
         />
       </form>
     );
