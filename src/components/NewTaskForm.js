@@ -44,6 +44,8 @@ export default function NewTaskForm({ addTask }) {
           data-tip="Add New Task"
           type="submit"
           disabled={ true }
+          tabIndex={ 0 }
+          aria-label="Add new task"
         >
           <svg 
             xmlns="http://www.w3.org/2000/svg" 
@@ -61,6 +63,10 @@ export default function NewTaskForm({ addTask }) {
           onChange={( event ) => handleChange( event.target.value )} 
           onClick={() => document.querySelector( '#NewTaskForm' ).classList.add( 'creating' )}
           onBlur={() => document.querySelector( '#NewTaskForm' ).classList.remove( 'creating' )}
+          aria-required={ true }
+          tabIndex={ 0 }
+          aria-label="New task text"
+          required
         />
       </form>
     );

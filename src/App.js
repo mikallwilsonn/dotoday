@@ -231,6 +231,8 @@ export default class App extends Component {
         <button
           className="clear-tasks-btn font-semi-bold"
           onClick={() => this.setState({ hideCompleted: true }) }
+          tabIndex={ 0 }
+          aria-label="Hide Tasks that have been Completed"
         >
           <svg 
             aria-hidden="true" 
@@ -258,6 +260,8 @@ export default class App extends Component {
         <button
           className="clear-tasks-btn font-semi-bold"
           onClick={() => this.setState({ hideCompleted: false }) }
+          tabIndex={ 0 }
+          aria-label="Show Tasks that have been Completed"
         >
           <svg 
             aria-hidden="true" 
@@ -302,6 +306,8 @@ export default class App extends Component {
                     <button
                       className="clear-tasks-btn font-semi-bold"
                       onClick={ this.clearAllTasks }
+                      tabIndex={ 0 }
+                      aria-label="Clear and delete all tasks"
                     >
                       <svg 
                         xmlns="http://www.w3.org/2000/svg" 
