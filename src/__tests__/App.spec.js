@@ -53,7 +53,7 @@ describe( '<App />', () => {
 
   // --
   it( 'renders the Hide Completed Button', () => {
-    const { queryByTestId } = render( <App testTasks={true} /> );
+    const { queryByTestId } = render( <App setTestTasks={ true } /> );
 
     expect( queryByTestId( 'hide-completed-button' )).toBeTruthy();
   });

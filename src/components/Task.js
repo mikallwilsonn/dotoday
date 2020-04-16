@@ -36,8 +36,10 @@ export default function Task({ task, completeTask, uncompleteTask, removeTask, e
     // Rendering the component
     return (
         <div 
+            id={ `Task-${ task._id }` }
             className={`task ${task.isCompleted ? "completed" : "" } ${ isEditing ? 'editing' : ''}`}
-            data-testid={`task`}
+            data-testid="task"
+            data-taskid={ task._id }
         >
             <div className="task-complete-wrapper">
                 { task.isCompleted === false ?
@@ -47,6 +49,7 @@ export default function Task({ task, completeTask, uncompleteTask, removeTask, e
                         data-tip="Mark as complete"
                         tabIndex={ 0 }
                         aria-label="Mark task as complete"
+                        data-testid={`task-complete-button-${task._id}`}
                     >
                         <svg 
                             aria-hidden="true" 
@@ -71,6 +74,7 @@ export default function Task({ task, completeTask, uncompleteTask, removeTask, e
                         data-tip="Undo task completion"
                         tabIndex={ 0 }
                         aria-label="Mark task as uncomplete"
+                        data-testid={`task-uncomplete-button-${task._id}`}
                     >
                         <svg 
                             version="1.1" 
@@ -91,6 +95,7 @@ export default function Task({ task, completeTask, uncompleteTask, removeTask, e
                         <form 
                             id={`task-form-${task._id}`}
                             onSubmit={ handleEdit }
+                            data-testid={`task-edit-form-${task._id}`}
                         >
                             <input
                                 type="text" 
@@ -101,11 +106,15 @@ export default function Task({ task, completeTask, uncompleteTask, removeTask, e
                                 aria-required={ true }
                                 tabIndex={ 0 }
                                 aria-label="Task text to edit"
+                                data-testid={`task-edit-form-input-${task._id}`}
                             />
                         </form>
                     :
                         <>
-                            <span className="task-label-text font-semi-bold">
+                            <span 
+                                className="task-label-text font-semi-bold" 
+                                data-testid={ `task-label-${task._id}` }
+                            >
                                 { task.text }
                             </span>
                             
@@ -134,6 +143,7 @@ export default function Task({ task, completeTask, uncompleteTask, removeTask, e
                             data-tip="Edit task?"
                             tabIndex={ 0 }
                             aria-label="Edit task button"
+                            data-testid={`task-edit-button-${task._id}`}
                         >
                             <svg 
                                 version="1.1" 
@@ -154,13 +164,14 @@ export default function Task({ task, completeTask, uncompleteTask, removeTask, e
                             data-tip="Cancel edit?"
                             tabIndex={ 0 }
                             aria-label="Cancel the task edit changes"
+                            data-testid={`task-cancel-edit-button-${task._id}`}
                         >
                             <svg 
                                 aria-hidden="true" 
                                 focusable="false" 
                                 data-prefix="fas" 
                                 data-icon="ban" 
-                                class="svg-inline--fa fa-ban fa-w-16" 
+                                className="svg-inline--fa fa-ban fa-w-16" 
                                 role="img" 
                                 xmlns="http://www.w3.org/2000/svg" 
                                 viewBox="0 0 512 512"
@@ -181,6 +192,7 @@ export default function Task({ task, completeTask, uncompleteTask, removeTask, e
                     data-tip="Delete task?"
                     tabIndex={ 0 }
                     aria-label="Delete task button"
+                    data-testid={`task-delete-button-${task._id}`}
                 >
                     <svg 
                         aria-hidden="true" 

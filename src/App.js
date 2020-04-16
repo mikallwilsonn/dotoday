@@ -110,7 +110,7 @@ export default class App extends Component {
 
   // --
   componentDidMount() {
-    if ( this.props.testTasks && this.props.testTasks === true ) {
+    if ( this.props.setTestTasks && this.props.setTestTasks === true ) {
       this.setTasksforTests()
     }
   }
