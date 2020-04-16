@@ -34,9 +34,6 @@
     "coverageReporters": [
       "html",
       "text"
-    ],
-    "include": [
-      "./src/__tests__/*.js"
     ]
   },
   "eslintConfig": {
